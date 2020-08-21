@@ -1,0 +1,14 @@
+{
+  "contacts": [
+    {
+      "id": "1",
+      "name": "Jane Bennet",
+      "phoneNumber": "01821902345"
+    },
+    {
+      "id": "2",
+      "name": "Lizzie Bennet",
+      "phoneNumber": "01627802378"
+    }
+  ]
+}
