@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect} from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import AppReducer, { ACTIONS } from './AppReducer';
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ export const GlobalContextProvider = ({ children }) => {
     
     const [state, dispatch] = useReducer(AppReducer, initialState)
 
-    useEffect(() => {
+    const fetchContact = () => {
         axios
         .get(endpoint + "/contacts")
         .then(response => {
@@ -30,7 +30,11 @@ export const GlobalContextProvider = ({ children }) => {
                 type: ACTIONS.FETCH_ERROR
             })
         })
-    }, [state])
+    }
+
+    useEffect(() => {
+        fetchContact()
+    }, [])
 
     const addNewContact = item => {
         axios
@@ -70,6 +74,7 @@ export const GlobalContextProvider = ({ children }) => {
                 type: ACTIONS.UPDATE_CONTACT,
                 payload: item
             })
+            fetchContact()
         })
         .catch(error => {
             console.log(error + " " + item.id + " " + item)
