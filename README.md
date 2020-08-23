@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Simple Phone Book Web App
 
-This is a simple phone book app created using ReactJS. It uses functional components with hooks and the context api, and has CRD functionality.
+This is a simple phone book app created using ReactJS. It uses functional components with hooks and the context api, and has CRUD functionality.
 
 ## Usage
 
