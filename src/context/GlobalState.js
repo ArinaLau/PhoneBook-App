@@ -48,6 +48,24 @@ export const GlobalContextProvider = ({ children }) => {
         
     }
 
+    const updateContact = (id, item) => {
+        axios
+        .put(endpoint + `/contacts/${id}`, item)
+        .then(() => {
+            dispatch({
+                type: ACTIONS.UPDATE_CONTACT,
+                payload: {
+                    id, 
+                    name: item.name,
+                    phoneNumber: item.phoneNumber
+                }
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
     useEffect(() => {
         axios
         .get(endpoint + "/contacts")
@@ -70,7 +88,8 @@ export const GlobalContextProvider = ({ children }) => {
             error: state.error,
             contacts: state.contacts,
             addNewContact,
-            deleteContact
+            deleteContact,
+            updateContact
         }}>
             {children}
         </GlobalContext.Provider>

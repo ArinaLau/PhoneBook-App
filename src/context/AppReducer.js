@@ -2,7 +2,8 @@ export const ACTIONS = {
     ADD_CONTACT: 'ADD_CONTACT',
     DELETE_CONTACT: 'DELETE_CONTACT',
     FETCH_SUCCESS: 'FETCH_SUCCESS',
-    FETCH_ERROR: 'FETCH_ERROR'
+    FETCH_ERROR: 'FETCH_ERROR',
+    UPDATE_CONTACT: 'UPDATE_CONTACT'
 }
 
 export default (state, action) => {
@@ -31,6 +32,17 @@ export default (state, action) => {
                 loading: false,
                 contacts: [],
                 error: "Something went wrong!"
+            }
+
+        case ACTIONS.UPDATE_CONTACT: 
+            return {
+                ...state,
+                contacts: state.contacts.map(contact => {
+                    if(contact.id === action.payload.id){
+                        return{...state.contact, name: action.payload.name, phoneNumber: action.payload.phoneNumber}
+                    }
+                    return contact
+                })
             }
 
         default:

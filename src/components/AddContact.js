@@ -13,6 +13,8 @@ export default function AddContact(){
     })
    
     const [visible, setVisible] = useState(false);
+
+    const [inputAlert, setInputAlert] = useState(false);
     
     const { name, phoneNumber } = contacts
     
@@ -22,7 +24,7 @@ export default function AddContact(){
 
     const handleSubmit = e => {
         e.preventDefault();
-        if(name !== "" || phoneNumber !== ""){
+        if(name !== "" && phoneNumber !== ""){
             const newContact = {
                 id: uuidv4(),
                 name,
@@ -35,13 +37,28 @@ export default function AddContact(){
                 phoneNumber: ""
             })
 
-            setVisible(!visible)
+            setVisible(true)
+        }
+        else{
+            setInputAlert(true)
         }
     }
+
+    const onDismiss = () => {
+        setInputAlert(false)
+    }
+
+    const onMessageDismiss = () => {
+        setVisible(false)
+    }
+
     
     return (
         <div className="mt-3">
             <Form onSubmit={handleSubmit}>
+                <Alert color="danger" isOpen={inputAlert} toggle={onDismiss}>
+                   Please make sure input fields are not empty!
+                </Alert>    
                 <FormGroup>
                 <Label for="name">Contact Name</Label>
                 <Input 
@@ -64,12 +81,11 @@ export default function AddContact(){
                 </FormGroup>
                 <FormGroup>
                     <Button className="float-right" color="primary" type="submit">Add Contact</Button>
-                </FormGroup>
+                </FormGroup>    
             </Form>
-
-             <Alert color="success" isOpen={visible}>
+            <Alert color="success" isOpen={visible} toggle={onMessageDismiss}>
                     New Contact Added!
-                </Alert>    
+            </Alert> 
         </div>
         
     )

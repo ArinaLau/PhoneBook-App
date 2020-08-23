@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { GlobalContext} from '../context/GlobalState';
+import ContactListItem from './ContactListItem';
 
 export default function ContactList()  {
 
-   const { loading , error, contacts, deleteContact } = useContext(GlobalContext)
+   const { loading , error, contacts } = useContext(GlobalContext)
       
     return (
         <>
@@ -14,21 +15,13 @@ export default function ContactList()  {
           <tr>
             <th>Contact Name</th>
             <th>Phone Number</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {contacts.map(contact => (
-            <tr key={contact.id}>
-              <td>{contact.name}</td>
-              <td>{contact.phoneNumber}</td>
-              <td>
-                <Button color="danger" size="sm" onClick={() => {
-                    deleteContact(contact.id)
-                }}>Delete</Button>
-              </td>
-            </tr>
+           <ContactListItem  key={contact.id} contact={contact}  />
           ))}
         </tbody>
       </Table>
