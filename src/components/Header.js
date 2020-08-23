@@ -1,12 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Header(){
 	return(
 		<header style={headerStyle}>
 			<h1>React PhoneBook App</h1>
-			<Link style={linkStyle} to="/" >Home</Link> | 
-			<Link style={linkStyle} to="/add">Add Contact</Link>
+			<NavLink 
+				style={linkStyle} 
+				activeStyle={activeLink}
+				exact
+				to="/">
+				Home</NavLink> | 
+			<NavLink style={linkStyle} activeStyle={activeLink} to="/add"> Add Contact</NavLink>
 		</header>
 
 		)
@@ -24,6 +29,11 @@ const headerStyle = {
 const linkStyle = {
 	color: '#fff',
 	textDecoration: 'none'
+}
+
+const activeLink = {
+	fontWeight: "bold",
+	color: "#aaa"
 }
 
 

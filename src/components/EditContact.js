@@ -7,23 +7,34 @@ export default function EditContact({ contact, handleEdit }) {
 
     const { updateContact } = useContext(GlobalContext)
 
-    const [updateData, setUpdateData] = useState({
-        id: contact.id,
-        name: contact.name,
-        phoneNumber: contact.phoneNumber
-    })
+    const { id, name, phoneNumber } = contact
 
+    const [updateData, setUpdateData] = useState({
+        key: id,
+        updateName: name,
+        updatePhoneNumber: phoneNumber
+      })
+
+    const { updateName, updatePhoneNumber } = updateData
+    
     const [visible, setVisible] = useState(false);
 
     const onChangeEdit = e => {
         setUpdateData({...updateData, [e.target.name]: e.target.value})
+        console.log(updateData)
     }
 
     const handleSubmitEdit = e => {
         e.preventDefault()
-        if(updateData.name !== "" && updateData.phoneNumber !== ""){
-           updateContact(updateData.id, updateData)
-           handleEdit()
+        if(updateName !== "" || updatePhoneNumber !== ""){
+            const item = {
+                id: id,
+                name: updateName,
+                phoneNumber: updatePhoneNumber
+            }
+            updateContact(item.id, item)
+            handleEdit()
+            autoRefresh(5)
         }
         else {
             setVisible(true)
@@ -34,8 +45,12 @@ export default function EditContact({ contact, handleEdit }) {
         setVisible(false)
     }
 
+    function autoRefresh(time){
+        setTimeout(window.location.reload(), time)
+    }
+
     return (
-        <Form>
+        <Form key={id}>
             <Alert color="danger" isOpen={visible} toggle={onDismiss}>
                    Please make sure input fields are not empty!
                 </Alert>   
@@ -44,9 +59,9 @@ export default function EditContact({ contact, handleEdit }) {
                 <Label for="name">Contact Name</Label>
                 <Input 
                     type="text" 
-                    name="name" 
+                    name="updateName" 
                     placeholder="Contact Name..." 
-                    defaultValue={contact.name} 
+                    defaultValue={name} 
                     autoComplete="off" 
                     onChange={onChangeEdit} 
                 />
@@ -55,15 +70,17 @@ export default function EditContact({ contact, handleEdit }) {
                 <Label for="phoneNumber">Contact Number</Label>
                 <Input 
                     type="text" 
-                    name="phoneNumber" 
+                    name="updatePhoneNumber" 
                     placeholder="Contact Number..." 
-                    defaultValue={contact.phoneNumber} 
+                    defaultValue={phoneNumber} 
                     autoComplete="off"
                     onChange={onChangeEdit} 
                 />
             </FormGroup>
             <FormGroup>
-                <Button color="primary" onClick={handleSubmitEdit}>Save Changes</Button>{' '}
+                <Button color="primary" onClick={(e, id) => {
+                    handleSubmitEdit(e)
+                }}>Save Changes</Button>{' '}
                 <Button color="secondary" className="float-right" onClick={handleEdit}>Cancel</Button>
             </FormGroup>
         </Form>

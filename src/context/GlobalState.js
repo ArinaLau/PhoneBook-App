@@ -43,7 +43,7 @@ export const GlobalContextProvider = ({ children }) => {
             // console.log(response.data)
         })
         .catch(error => {
-            console.log(error)
+            console.log(error + " " + id)
         })
         
     }
@@ -54,15 +54,12 @@ export const GlobalContextProvider = ({ children }) => {
         .then(() => {
             dispatch({
                 type: ACTIONS.UPDATE_CONTACT,
-                payload: {
-                    id, 
-                    name: item.name,
-                    phoneNumber: item.phoneNumber
-                }
+                payload: item
             })
+            console.log(item)
         })
         .catch(error => {
-            console.log(error)
+            console.log(error + " " + item.id + " " + item)
         })
     }
 

@@ -13,22 +13,24 @@ export default function ContactListItem({ contact }) {
         setModal(!modal)
     }
 
+    const {id, name, phoneNumber} = contact
+
     return (
-        <tr key={contact.id}>
-              <td>{contact.name}</td>
-              <td>{contact.phoneNumber}</td>
+        <tr>
+              <td>{name}</td>
+              <td>{phoneNumber}</td>
               <td>
                 <Button color="success" size="sm" className="mr-2" onClick={handleEdit}>Edit</Button>
                 
                 <Modal isOpen={modal} toggle={handleEdit}>
                     <ModalHeader toggle={handleEdit}>Edit Contact</ModalHeader>
                     <ModalBody>
-                        <EditContact contact={contact} handleEdit={handleEdit} />
+                        <EditContact key={id} contact={contact} handleEdit={handleEdit} />
                     </ModalBody>
                 </Modal>
 
                 <Button color="danger" size="sm" onClick={() => {
-                    deleteContact(contact.id)
+                    deleteContact(id)
                 }}>Delete</Button>
                 
               </td>
