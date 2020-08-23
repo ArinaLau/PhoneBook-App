@@ -16,6 +16,22 @@ export const GlobalContextProvider = ({ children }) => {
     
     const [state, dispatch] = useReducer(AppReducer, initialState)
 
+    useEffect(() => {
+        axios
+        .get(endpoint + "/contacts")
+        .then(response => {
+            dispatch({
+                type: ACTIONS.FETCH_SUCCESS,
+                payload: response.data
+            })
+        })
+        .catch(error => {
+            dispatch({
+                type: ACTIONS.FETCH_ERROR
+            })
+        })
+    }, [state])
+
     const addNewContact = item => {
         axios
         .post(endpoint + '/contacts/', item)
@@ -24,7 +40,6 @@ export const GlobalContextProvider = ({ children }) => {
                 type: ACTIONS.ADD_CONTACT,
                 payload: item
             })
-            // console.log(response.data)
         })
         .catch(error => {
            console.log(error)
@@ -40,7 +55,6 @@ export const GlobalContextProvider = ({ children }) => {
                 type: ACTIONS.DELETE_CONTACT,
                 payload: id
             })
-            // console.log(response.data)
         })
         .catch(error => {
             console.log(error + " " + id)
@@ -56,28 +70,11 @@ export const GlobalContextProvider = ({ children }) => {
                 type: ACTIONS.UPDATE_CONTACT,
                 payload: item
             })
-            console.log(item)
         })
         .catch(error => {
             console.log(error + " " + item.id + " " + item)
         })
     }
-
-    useEffect(() => {
-        axios
-        .get(endpoint + "/contacts")
-        .then(response => {
-            dispatch({
-                type: ACTIONS.FETCH_SUCCESS,
-                payload: response.data
-            })
-        })
-        .catch(error => {
-            dispatch({
-                type: ACTIONS.FETCH_ERROR
-            })
-        })
-    }, [])
 
     return(
         <GlobalContext.Provider value={{

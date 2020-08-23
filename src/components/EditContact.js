@@ -21,7 +21,6 @@ export default function EditContact({ contact, handleEdit }) {
 
     const onChangeEdit = e => {
         setUpdateData({...updateData, [e.target.name]: e.target.value})
-        console.log(updateData)
     }
 
     const handleSubmitEdit = e => {
@@ -34,7 +33,6 @@ export default function EditContact({ contact, handleEdit }) {
             }
             updateContact(item.id, item)
             handleEdit()
-            autoRefresh(5)
         }
         else {
             setVisible(true)
@@ -43,10 +41,6 @@ export default function EditContact({ contact, handleEdit }) {
 
     const onDismiss = () => {
         setVisible(false)
-    }
-
-    function autoRefresh(time){
-        setTimeout(window.location.reload(), time)
     }
 
     return (
