@@ -8,11 +8,13 @@ export const ACTIONS = {
 
 export default (state, action) => {
     switch(action.type){
+
         case ACTIONS.ADD_CONTACT: 
             return {
                 ...state,
-                contacts: [action.payload, ...state.contacts]
+                contacts: [...state.contacts, action.payload]
             }
+            
         case ACTIONS.DELETE_CONTACT:
             return {
                 ...state,
